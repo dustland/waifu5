@@ -1,8 +1,8 @@
 import json
 from pkg.core import app
-from plugins.Waifu.cells.generator import Generator
-from plugins.Waifu.organs.memories import Memory
-from plugins.Waifu.cells.cards import Cards
+from plugins.waifu5.cells.generator import Generator
+from plugins.waifu5.organs.memories import Memory
+from plugins.waifu5.cells.cards import Cards
 
 
 class Narrator:
@@ -12,7 +12,7 @@ class Narrator:
     def __init__(self, ap: app.Application, launcher_id: str):
         self.ap = ap
         self._generator = Generator(ap)
-        self._life_data_file = f"data/plugins/Waifu/data/life_{launcher_id}.json"
+        self._life_data_file = f"data/plugins/waifu5/data/life_{launcher_id}.json"
         self._profile = ""
         self._action = ""
         self._life_data = {}

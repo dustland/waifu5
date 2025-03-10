@@ -1,8 +1,8 @@
 import typing
 from pkg.core import app
-from plugins.Waifu.cells.generator import Generator
-from plugins.Waifu.organs.memories import Memory
-from plugins.Waifu.cells.cards import Cards
+from plugins.waifu5.cells.generator import Generator
+from plugins.waifu5.organs.memories import Memory
+from plugins.waifu5.cells.cards import Cards
 from pkg.provider import entities as llm_entities
 
 

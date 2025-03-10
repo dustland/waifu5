@@ -1,10 +1,10 @@
 import json
 import re
 from pkg.core import app
-from plugins.Waifu.cells.text_analyzer import TextAnalyzer
-from plugins.Waifu.cells.config import ConfigManager
-from plugins.Waifu.cells.generator import Generator
-from plugins.Waifu.organs.memories import Memory
+from plugins.waifu5.cells.text_analyzer import TextAnalyzer
+from plugins.waifu5.cells.config import ConfigManager
+from plugins.waifu5.cells.generator import Generator
+from plugins.waifu5.organs.memories import Memory
 
 
 class ValueGame:
@@ -29,10 +29,10 @@ class ValueGame:
             return        
         self._has_preset = True
 
-        self._status_file = f"data/plugins/Waifu/data/{character}_{launcher_id}.json"
+        self._status_file = f"data/plugins/waifu5/data/{character}_{launcher_id}.json"
 
-        character_config_path = f"data/plugins/Waifu/cards/{character}"
-        self._config = ConfigManager(character_config_path, f"plugins/Waifu/templates/default_{launcher_type}")
+        character_config_path = f"data/plugins/waifu5/cards/{character}"
+        self._config = ConfigManager(character_config_path, f"plugins/waifu5/templates/default_{launcher_type}")
         await self._config.load_config(completion=False)
 
         try:

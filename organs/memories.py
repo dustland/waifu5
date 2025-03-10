@@ -6,11 +6,11 @@ import re
 from datetime import datetime, timedelta
 from pkg.core import app
 from collections import Counter
-from plugins.Waifu.cells.text_analyzer import TextAnalyzer
-from plugins.Waifu.cells.generator import Generator
+from plugins.waifu5.cells.text_analyzer import TextAnalyzer
+from plugins.waifu5.cells.generator import Generator
 from pkg.plugin.context import APIHost
 from pkg.provider import entities as llm_entities
-from plugins.Waifu.cells.config import ConfigManager
+from plugins.waifu5.cells.config import ConfigManager
 
 
 class Memory:
@@ -41,9 +41,9 @@ class Memory:
         self._memory_batch_size = 50
         self._retrieve_top_n = 5
         self._summary_max_tags = 50
-        self._long_term_memory_file = f"data/plugins/Waifu/data/memories_{launcher_id}.json"
-        self._conversations_file = f"data/plugins/Waifu/data/conversations_{launcher_id}.log"
-        self._short_term_memory_file = f"data/plugins/Waifu/data/short_term_memory_{launcher_id}.json"
+        self._long_term_memory_file = f"data/plugins/waifu5/data/memories_{launcher_id}.json"
+        self._conversations_file = f"data/plugins/waifu5/data/conversations_{launcher_id}.log"
+        self._short_term_memory_file = f"data/plugins/waifu5/data/short_term_memory_{launcher_id}.json"
         self._summarization_mode = False
         self._status_file = ""
         self._thinking_mode_flag = True
@@ -53,7 +53,7 @@ class Memory:
         self._has_preset = True
 
     async def load_config(self, character: str, launcher_id: str, launcher_type: str):
-        waifu_config = ConfigManager(f"data/plugins/Waifu/config/waifu", "plugins/Waifu/templates/waifu", launcher_id)
+        waifu_config = ConfigManager(f"data/plugins/waifu5/config/waifu5", "plugins/waifu5/templates/waifu5", launcher_id)
         await waifu_config.load_config(completion=True)
 
         self.conversation_analysis_flag = waifu_config.data.get("conversation_analysis", True)
@@ -77,8 +77,8 @@ class Memory:
 
         if character != "off":
             self._has_preset = True
-            self._status_file = f"data/plugins/Waifu/data/{character}_{launcher_id}.json"
-            character_config = ConfigManager(f"data/plugins/Waifu/cards/{character}", f"plugins/Waifu/templates/default_{launcher_type}")
+            self._status_file = f"data/plugins/waifu5/data/{character}_{launcher_id}.json"
+            character_config = ConfigManager(f"data/plugins/waifu5/cards/{character}", f"plugins/waifu5/templates/default_{launcher_type}")
             await character_config.load_config(completion=False)
             self.user_name = character_config.data.get("user_name", "用户")
             self.assistant_name = character_config.data.get("assistant_name", "助手")
@@ -328,7 +328,7 @@ class Memory:
             self._conversations_file,
             self._short_term_memory_file,
             self._status_file,
-            f"data/plugins/Waifu/data/life_{self._launcher_id}.json",
+            f"data/plugins/waifu5/data/life_{self._launcher_id}.json",
         ]
 
         for file in files_to_delete:

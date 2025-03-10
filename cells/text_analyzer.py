@@ -6,7 +6,7 @@ import os
 from pkg.core import app
 from collections import Counter
 from typing import Tuple, List, Dict, Any
-from plugins.Waifu.cells.config import ConfigManager
+from plugins.waifu5.cells.config import ConfigManager
 
 
 class TextAnalyzer:
@@ -26,7 +26,7 @@ class TextAnalyzer:
         if file in TextAnalyzer.LOADED_DICTIONARIES:
             return TextAnalyzer.LOADED_DICTIONARIES[file]
 
-        config = ConfigManager(f"data/plugins/Waifu/config/{file}", f"plugins/Waifu/templates/{file}")
+        config = ConfigManager(f"data/plugins/waifu5/config/{file}", f"plugins/waifu5/templates/{file}")
         await config.load_config(completion=False)
 
         # 将加载的字典数据存入全局变量
@@ -156,7 +156,7 @@ class TextAnalyzer:
         :param filename: The name of the file to save the words in
         """
         existing_words = []
-        dict_file_path = f"data/plugins/Waifu/config/unrecognized_words.yaml"
+        dict_file_path = f"data/plugins/waifu5/config/unrecognized_words.yaml"
 
         if os.path.exists(dict_file_path):
             with open(dict_file_path, "r", encoding="utf-8") as f:

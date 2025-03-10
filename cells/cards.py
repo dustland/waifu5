@@ -1,7 +1,7 @@
 import typing
 import re
 from pkg.core import app
-from plugins.Waifu.cells.config import ConfigManager
+from plugins.waifu5.cells.config import ConfigManager
 
 
 class Cards:
@@ -30,7 +30,7 @@ class Cards:
             return
         self._has_preset = True
 
-        config = ConfigManager(f"data/plugins/Waifu/cards/{character}", f"plugins/Waifu/templates/default_{launcher_type}")
+        config = ConfigManager(f"data/plugins/waifu5/cards/{character}", f"plugins/waifu5/templates/default_{launcher_type}")
         await config.load_config(completion=False)
         self._user_name = config.data.get("user_name", "用户")
         self._assistant_name = config.data.get("assistant_name", "助手")

@@ -12,13 +12,13 @@ from pkg.platform.types import message as platform_message
 from pkg.plugin.context import register, handler, BasePlugin, APIHost, EventContext
 from pkg.plugin.events import PersonMessageReceived, GroupMessageReceived, NormalMessageResponded, GroupNormalMessageReceived
 from pkg.provider import entities as llm_entities
-from plugins.Waifu.cells.config import ConfigManager
-from plugins.Waifu.cells.generator import Generator
-from plugins.Waifu.cells.cards import Cards
-from plugins.Waifu.organs.memories import Memory
-from plugins.Waifu.systems.narrator import Narrator
-from plugins.Waifu.systems.value_game import ValueGame
-from plugins.Waifu.organs.thoughts import Thoughts
+from plugins.waifu5.cells.config import ConfigManager
+from plugins.waifu5.cells.generator import Generator
+from plugins.waifu5.cells.cards import Cards
+from plugins.waifu5.organs.memories import Memory
+from plugins.waifu5.systems.narrator import Narrator
+from plugins.waifu5.systems.value_game import ValueGame
+from plugins.waifu5.organs.thoughts import Thoughts
 
 COMMANDS = {
     "列出命令": "列出目前支援所有命令及介绍，用法：[列出命令]。",
@@ -79,7 +79,7 @@ class WaifuCache:
         self.ignore_prefix = []
 
 
-@runner.runner_class("waifu-mode")
+@runner.runner_class("waifu5-mode")
 class WaifuRunner(runner.RequestRunner):
     async def run(self, query: core_entities.Query):
         # 为了适配其他插件，以屏蔽runner的方式取代ctx.prevent_default()
@@ -90,19 +90,19 @@ class WaifuRunner(runner.RequestRunner):
         return
 
 
-@register(name="Waifu", description="Cuter than real waifu!", version="1.9.7", author="ElvisChenML")
-class Waifu(BasePlugin):
+@register(name="waifu5", description="Cuter than real waifu5!", version="1.9.7", author="ElvisChenML")
+class waifu5(BasePlugin):
     def __init__(self, host: APIHost):
         self.ap = host.ap
         self._ensure_required_files_exist()
         self._generator = Generator(self.ap)
         self.waifu_cache: typing.Dict[str, WaifuCache] = {}
-        self._set_permissions_recursively("data/plugins/Waifu/", 0o777)
+        self._set_permissions_recursively("data/plugins/waifu5/", 0o777)
 
     async def initialize(self):
-        await self._set_runner("waifu-mode")
+        await self._set_runner("waifu5-mode")
         # 为新用户创建配置文件
-        config_mgr = ConfigManager(f"data/plugins/Waifu/config/waifu", "plugins/Waifu/templates/waifu")
+        config_mgr = ConfigManager(f"data/plugins/waifu5/config/waifu5", "plugins/waifu5/templates/waifu5")
         await config_mgr.load_config(completion=True)
 
     async def destroy(self):
@@ -162,7 +162,7 @@ class Waifu(BasePlugin):
         if waifu_data and any(text_message.startswith(prefix) for prefix in waifu_data.ignore_prefix):
             return False
 
-        # Waifu 群聊成员黑名单
+        # waifu5 群聊成员黑名单
         if waifu_data and sender_id in waifu_data.blacklist:
             self.ap.logger.info(f"已屏蔽黑名单中{sender_id}的发言: {str(text_message)}。")
             return False
@@ -197,7 +197,7 @@ class Waifu(BasePlugin):
         self.waifu_cache[launcher_id] = WaifuCache(self.ap, launcher_id, launcher_type)
         cache = self.waifu_cache[launcher_id]
 
-        config_mgr = ConfigManager(f"data/plugins/Waifu/config/waifu", "plugins/Waifu/templates/waifu", launcher_id)
+        config_mgr = ConfigManager(f"data/plugins/waifu5/config/waifu5", "plugins/waifu5/templates/waifu5", launcher_id)
         await config_mgr.load_config(completion=True)
 
         character = config_mgr.data.get("character", f"default")
@@ -235,7 +235,7 @@ class Waifu(BasePlugin):
         if cache.jail_break_mode in ["before", "after", "end", "all"]:
             self._set_jail_break(cache, cache.jail_break_mode)
 
-        self._set_permissions_recursively("data/plugins/Waifu/", 0o777)
+        self._set_permissions_recursively("data/plugins/waifu5/", 0o777)
 
     async def _set_runner(self, runner_name: str):
         """用于设置 RunnerManager 的 using_runner"""
@@ -371,7 +371,7 @@ class Waifu(BasePlugin):
             return "没有正在运行的计时器。"
 
     def _ensure_required_files_exist(self):
-        directories = ["data/plugins/Waifu/cards", "data/plugins/Waifu/config", "data/plugins/Waifu/data"]
+        directories = ["data/plugins/waifu5/cards", "data/plugins/waifu5/config", "data/plugins/waifu5/data"]
 
         for directory in directories:
             if not os.path.exists(directory):
@@ -380,8 +380,8 @@ class Waifu(BasePlugin):
 
         files = ["jail_break_before.txt", "jail_break_after.txt", "jail_break_end.txt", "tidy.py"]
         for file in files:
-            file_path = f"data/plugins/Waifu/config/{file}"
-            template_path = f"plugins/Waifu/templates/{file}"
+            file_path = f"data/plugins/waifu5/config/{file}"
+            template_path = f"plugins/waifu5/templates/{file}"
             if not os.path.exists(file_path) and os.path.exists(template_path):
                 # 如果配置文件不存在，并且提供了模板，则使用模板创建配置文件
                 shutil.copyfile(template_path, file_path)

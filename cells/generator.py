@@ -299,7 +299,7 @@ class Generator:
     def set_jail_break(self, jail_break_type: str, user_name: str):
         self._jail_break_type = jail_break_type
         self._jail_break_dict = {}
-        base_filepath = "data/plugins/Waifu/config/"
+        base_filepath = "data/plugins/waifu5/config/"
 
         if jail_break_type == "all":
             # Load all jail break files
