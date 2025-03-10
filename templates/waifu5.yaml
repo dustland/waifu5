@@ -1,6 +1,6 @@
 # 通用设置
 character: "default" # off：不使用角色预设；请填Waifu/cards中的 “角色卡名称.yaml” 的 角色卡名称，使用默认值“default”时会使用模板config/default_*.yaml创建cards/default_*.yaml。
-summarization_mode: false # 是否开启长期记忆，不开启则超出short_term_memory_size直接截断。
+summarization_mode: true # 是否开启长期记忆，不开启则超出short_term_memory_size直接截断。
 story_mode: false # 是否开启剧情模式（旁白、状态栏），仅私聊模式生效。
 thinking_mode: true # 是否开启思维链。开启后模型将具备：更高的拟人化程度、区分不同群用户发言。注意：思维链会在一定程度上影响模型回复。
 personate_mode: false # 是否启用拟人化：打字时间、分段回复。
@@ -9,10 +9,10 @@ langbot_group_rule: false # 是否继承LangBot的群消息响应规则；若启
 ignore_prefix: ["/"]
 
 # 思考模块
-conversation_analysis: False # 是否启用场景分析。分析可以更好的理解会话场景，但有可能造成无法回答专业问题的负面效果。
+conversation_analysis: True # 是否启用场景分析。分析可以更好的理解会话场景，但有可能造成无法回答专业问题的负面效果。
 display_thinking: false # 是否显示内心活动。
 analyze_max_conversations: 9 # 用于生成分析的最大对话数量。
-max_thinking_words: 30 # 最大思考字数，此配置不是硬性限制，该配置体现于提示语中。
+max_thinking_words: 100 # 最大思考字数，此配置不是硬性限制，该配置体现于提示语中。
 
 # 记忆模块
 short_term_memory_size: 40 # 短期记忆，完整的对话记录长度。
@@ -21,15 +21,15 @@ retrieve_top_n: 3 # 长期记忆，每次提取retrieve_top_n条相关的长期�
 summary_max_tags: 50 # 长期记忆，每段长期记忆的最大标签数量（高频词、类型名称）。
 
 # 群聊设置
-response_min_conversations: 1 # 群聊触发回复的最小对话数量。
-response_rate: 1 # 群聊触达到最小对话数量后回复的机率，为1时所有消息都响应。
+response_min_conversations: 4 # 群聊触发回复的最小对话数量。
+response_rate: 0.5 # 群聊触达到最小对话数量后回复的机率，为1时所有消息都响应。
 group_response_delay: 0 # 群聊消息合并等待时间（秒）。
 blacklist: [] # 屏蔽列表，将自动过滤来自列表中QQ号的消息；以数字列表形式输入：[QQ号, QQ号, QQ号, ...]。
 repeat_trigger: 2 # 0为关闭复读；群聊出现重复发言时触发复读的最小次数（不含原发言）；触发回复后，检测到重复出现的对话时参与复读。
 
 # 拟人化设置
-bracket_rate: [0.1, 0.1] # 回复末尾加括号的机率，第一个对应加（）的机率，第二个对应加（的机率。
-personate_delay: 0 # 分段回复的间隔（秒），0为默认间隔（两个字一秒）。
+bracket_rate: [0.1, 0.3] # 回复末尾加括号的机率，第一个对应加（）的机率，第二个对应加（的机率。
+personate_delay: 1 # 分段回复的间隔（秒），0为默认间隔（两个字一秒）。
 
 # 私聊剧情模式
 display_value: false # 是否每次回复后显示数值；若关闭，请通过命令[态度]查看。
