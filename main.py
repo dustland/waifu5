@@ -90,7 +90,7 @@ class WaifuRunner(runner.RequestRunner):
         return
 
 
-@register(name="waifu5", description="Cuter than real waifu5!", version="1.9.7", author="ElvisChenML")
+@register(name="waifu5", description="Cuter than real waifu5.1!", version="1.9.7", author="ElvisChenML")
 class waifu5(BasePlugin):
     def __init__(self, host: APIHost):
         self.ap = host.ap
